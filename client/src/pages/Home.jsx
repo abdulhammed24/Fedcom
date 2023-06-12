@@ -5,46 +5,47 @@ import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { useGetProductsQuery } from "../redux/productSlice";
+// import { useGetProductsQuery } from "../redux/productSlice";
+import { useGetProductsQuery } from "../redux/productsApiSlice";
 // import Paginate from "../components/Paginate";
 // import ProductCarousel from "../components/ProductCarousel";
 // import Meta from "../components/Meta";
 
-// const Home = ({ match }) => {
 const Home = () => {
-  const { data = [], error, isLoading } = useGetProductsQuery();
-  console.log(data);
+  // const { pageNumber, keyword } = useParams();
+
+  const { data, isLoading, error } = useGetProductsQuery({
+    // keyword,
+    // pageNumber,
+  });
 
   return (
     <>
-      {/* <Meta />
-      {!keyword ? (
+      {/* {!keyword ? (
         <ProductCarousel />
       ) : (
-        <Link to="/" className="btn btn-light">
+        <Link to="/" className="btn btn-light mb-4">
           Go Back
         </Link>
       )} */}
-      <h1>Latest Products</h1>
-
-      {error ? (
-        <Message variant="danger">{error}</Message>
-      ) : isLoading ? (
+      {isLoading ? (
         <Loader />
-      ) : data ? (
+      ) : error ? (
+        <Message variant="danger">{error?.data?.message || error.error}</Message>
+      ) : (
         <>
+          {/* <Meta /> */}
+          <h1>Latest Products</h1>
           <Row>
-            {data?.products?.map((product, id) => {
-              return (
-                <Col key={id} sm={12} md={6} lg={4} xl={3}>
-                  <Product product={product} />
-                </Col>
-              );
-            })}
+            {data?.products.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} />
+              </Col>
+            ))}
           </Row>
-          {/* <Paginate pages={pages} page={page} keyword={keyword ? keyword : ""} /> */}
+          {/* <Paginate pages={data.pages} page={data.page} keyword={keyword ? keyword : ""} /> */}
         </>
-      ) : null}
+      )}
     </>
   );
 };

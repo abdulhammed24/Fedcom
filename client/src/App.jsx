@@ -1,43 +1,40 @@
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Footer from "./components/Footer";
+// import { useEffect } from 'react';
+// import { useDispatch } from 'react-redux';
+import { Container } from "react-bootstrap";
+import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
-import Home from "./pages/Home";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Product from "./pages/Product";
+import Footer from "./components/Footer";
+// import { logout } from './slices/authSlice';
 
-const Layout = () => {
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const App = () => {
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const expirationTime = localStorage.getItem('expirationTime');
+  //   if (expirationTime) {
+  //     const currentTime = new Date().getTime();
+
+  //     if (currentTime > expirationTime) {
+  //       dispatch(logout());
+  //     }
+  //   }
+  // }, [dispatch]);
+
   return (
-    <div>
+    <>
+      <ToastContainer />
       <Header />
-      <Outlet />
+      <main className="py-3">
+        <Container>
+          <Outlet />
+        </Container>
+      </main>
       <Footer />
-    </div>
+    </>
   );
 };
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/products/:id",
-        element: <Product />,
-      },
-    ],
-  },
-]);
-
-function App() {
-  return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
-  );
-}
 
 export default App;
