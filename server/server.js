@@ -1,19 +1,25 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import db from "./config/db.js";
 import product from "./routes/productRoutes.js";
 import user from "./routes/userRoutes.js";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
-// import authRoute from "./routes/authRoute.js";
 
 const app = express();
 dotenv.config();
-db();
+db(); // connect to MongoDB
 
 // important
 app.use(cors());
+
+// body parser middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// cookie parser middleware
+app.use(cookieParser());
 
 // router
 app.get("/", async (req, res) => {
