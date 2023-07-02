@@ -9,11 +9,13 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Home from "./pages/Home.jsx";
 import Product from "./pages/Product.jsx";
 import Cart from "./pages/Cart.jsx";
+import Login from "./pages/Login.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/product/:id" element={<Product />} />
       <Route path="/cart" element={<Cart />} />
     </Route>
